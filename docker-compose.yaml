@@ -1,0 +1,22 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434 # 連接到主機上運行的 Ollama
+      # 如果需要，可以在這裡加入其他環境變數，例如：
+      # - ENABLE_SIGNUP=false
+    volumes:
+      - open-webui:/app/backend/data
+    restart: always
+
+    # 'host-gateway' 是 Docker 提供的一個特殊值，會解析為主機的 IP。
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  open-webui:
+    driver: local
+
